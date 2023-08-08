@@ -1,0 +1,25 @@
+class A;
+  rand int a[] ;
+  constraint C1 {a.size() == 10;}
+  constraint C2 {foreach(a[i]) a[i] inside {[1:20]};}
+  constraint C3 { foreach(a[i])
+                  {   
+                    if(i% 2 == 0)
+                      a[i]% 2 != 0;
+                    else
+                      a[i]% 2 == 0;
+                  }   
+                }   
+  endclass
+  
+module test;     
+    A a1;
+    initial begin 
+      a1 = new();
+      begin
+        assert(a1.randomize());
+        foreach(a1.a[i])
+          $display(" a [%0d] = %0d",i,a1.a[i]);
+      end
+    end 
+endmodule
